@@ -7,3 +7,5 @@ C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin
 C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\obj\Debug\DatasetProg.csprojResolveAssemblyReference.cache
 C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\obj\Debug\DatasetProg.exe
 C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\obj\Debug\DatasetProg.pdb
+C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin\Debug\MySql.Data.dll
+C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin\Debug\MySql.Data.xml
