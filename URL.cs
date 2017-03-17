@@ -42,8 +42,8 @@ namespace DatasetProg
                     // write out columns to confirm data
                     Console.WriteLine(reader["longitude"] + " " + reader["latitude"] + " " + reader["stationID"]);
                     // adds stationData to list
+                    // see Nunit test
                     stationInfo.Add(stationData);
-                    
                 }
             }
             catch (Exception ex)
