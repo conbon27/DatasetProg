@@ -9,3 +9,5 @@ C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\obj
 C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\obj\Debug\DatasetProg.pdb
 C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin\Debug\MySql.Data.dll
 C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin\Debug\MySql.Data.xml
+C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin\Debug\nunit.framework.dll
+C:\Users\aconw\Documents\Visual Studio 2015\Projects\DatasetProg\DatasetProg\bin\Debug\nunit.framework.xml

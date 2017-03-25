@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DatasetProg
+﻿namespace DatasetProg
 {
-    class StationData
+    internal class StationData
     {
-        public string longitude { get; set; }
-        public string latitude { get; set; }
-        public string stationID { get; set; }
-        public string csv { get; set; }
-        public string json { get; set; }
+        // creates string variables for values to be passed into from Database into JSON-LD
+        // properties set for accessors
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
+        public string StationId { get; set; }
+        public string Csv { get; set; }
+        public string Json { get; set; }
     }
 }
