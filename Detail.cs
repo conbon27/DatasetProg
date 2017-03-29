@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace DatasetProg
 {
@@ -10,9 +10,9 @@ namespace DatasetProg
         public void ConfirmDetails(List<StationData> results)
         {
             // creates new Url object
-           var u = new Url();
-           // 'results' stores data taken from external DB
-           results = u.ReadTable();
+            var u = new Url();
+            // 'results' stores data taken from external DB
+            results = u.ReadTable();
 
             for (var i = 0; i < 33; i++)
             {
@@ -66,8 +66,7 @@ namespace DatasetProg
                     longitude = results[i].Longitude,
                     latitude = results[i].Latitude
                 };
-                // e.g. "53.95219" - taken from DB
-                // taken from DB
+                // e.g. "53.95219" & "-10.101596" - taken from DB
 
                 var spat = new SpatialCoverage
                 {
@@ -85,7 +84,7 @@ namespace DatasetProg
                         "Tidal predictions are generated from measured data via the Irish National Tide Gauge Network ...",
                     url = "http://data.marine.ie/Dataset/Details/20955",
                     sameAs = "http://data.marine.ie/Category/Index/12",
-                    keywords = new List<string>()
+                    keywords = new List<string>
                     {
                         "OCEANOGRAPHY > TIDE > TIDAL WATER",
                         "OCEANOGRAPHY > TIDE > PREDICTIONS",
@@ -93,29 +92,29 @@ namespace DatasetProg
                     },
                     includedInDataCatalog = inc,
                     creator = creator,
-                    distribution = new List<Distribution>() {dist1, dist2},
+                    distribution = new List<Distribution> {dist1, dist2},
                     temporalCoverage = "2017-01-01/2020-01-01",
                     spatialCoverage = spat
                 };
-                // keywords to be updated by method - pull station_id from DB
-                // important for rest service if used
+                // keywords to be updated by method - pull station_id from DB to be entered in keywords List 
+                // important for rest service as used to perform index search in PHP
 
-                // check shows data taken in from DB
+                // visual check shows data taken-in from DB
                 Console.WriteLine("Details Confirmed: " + g.longitude + " " + g.latitude);
 
                 // creation of List of type dataset with all the above info added using the Collections initializer
                 var oj = new List<Dataset> {root};
 
                 // added above set values in list to rendered JSON file - with indent formatting.
-                var json = JsonConvert.SerializeObject(oj, Newtonsoft.Json.Formatting.Indented);
+                var json = JsonConvert.SerializeObject(oj, Formatting.Indented);
                 // as a check of the format - immediate output to console for viewing
                 Console.WriteLine(json);
                 // escape point here if format/output incorrect during testing
                 // Console.ReadKey();
                 // serialize JSON to a string and then write string to a file
-                File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory\Dataset"+i+".jsonld", JsonConvert.SerializeObject(oj, Newtonsoft.Json.Formatting.Indented));
+                File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory\Dataset" + i + ".jsonld",
+                    JsonConvert.SerializeObject(oj, Formatting.Indented));
             }
         }
-
     }
 }

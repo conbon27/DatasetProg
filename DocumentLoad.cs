@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JsonLD;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace DatasetProg
 {
-        // classes to represent each attribute of json-ld end file
-        public class ContactPoint
+    // classes created to represent each attribute of json-ld end file
+    public class ContactPoint
     {
         // JsonProperty used to include @ sign in final tags to enable discoverability
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public string contactType { get; set; }
         public string telephone { get; set; }
         public string email { get; set; }
@@ -22,7 +18,8 @@ namespace DatasetProg
     public class Creator
     {
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public string url { get; set; }
         public string name { get; set; }
         public ContactPoint contactPoint { get; set; }
@@ -31,14 +28,16 @@ namespace DatasetProg
     public class IncludedInDataCatalog
     {
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public string name { get; set; }
     }
 
     public class Distribution
     {
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public string encodingFormat { get; set; }
         public string contentUrl { get; set; }
     }
@@ -46,7 +45,8 @@ namespace DatasetProg
     public class Geo
     {
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public string latitude { get; set; }
         public string longitude { get; set; }
     }
@@ -54,16 +54,19 @@ namespace DatasetProg
     public class SpatialCoverage
     {
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public Geo geo { get; set; }
     }
 
     public class Dataset
     {
         [JsonProperty("@context")]
-        public string @context { get; set; }
+        public string context { get; set; }
+
         [JsonProperty("@type")]
-        public string @type { get; set; }
+        public string type { get; set; }
+
         public string name { get; set; }
         public string description { get; set; }
         public string url { get; set; }
@@ -75,6 +78,4 @@ namespace DatasetProg
         public string temporalCoverage { get; set; }
         public SpatialCoverage spatialCoverage { get; set; }
     }
-
-
 }

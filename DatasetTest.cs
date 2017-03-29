@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
-using NUnit.Framework;
-using System.Transactions;
 using System.IO;
+using System.Transactions;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace DatasetProg
 {
     [TestFixture]
     public class DatasetTest
     {
-        // guards against DB data corruption as a result of testing
-        private TransactionScope _scope;
-        // creates connection variable
-        private readonly MySqlConnection _conn =
-            new MySqlConnection("Server = danu6.it.nuigalway.ie; Database = mydb2463; Uid = mydb2463ca; Pwd = mi3tax");
-
         // instrction of what to have set up before each test run
         [SetUp]
         public void SetUp()
@@ -30,37 +24,12 @@ namespace DatasetProg
         {
             _scope.Dispose();
         }
-        // Test that Database can be created & populated
-        [Test]
-        public void TestDatabaseCreation()
-        {
-            // creates a new URL object
-            var udb = new Url();
-            try
-            {
-                // confirm a blank URL object has been created
-                Assert.Null(udb);
-            }
-            // prints exception error stack trace
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
-            try
-            {
-                // connects to MySQL DB to read data
-                // populates table
-                List<StationData> results = udb.ReadTable();
-                // checks that table was populated
-                Assert.NotNull(udb);
-            }
-            // prints exception error stack trace
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
 
-        }
+        // guards against DB data corruption as a result of testing
+        private TransactionScope _scope;
+        // creates connection variable
+        private readonly MySqlConnection _conn =
+            new MySqlConnection("Server = danu6.it.nuigalway.ie; Database = mydb2463; Uid = mydb2463ca; Pwd = mi3tax");
 
         // test that station info can be input & then added to 
         [Test]
@@ -89,7 +58,7 @@ namespace DatasetProg
                     Csv = "csv",
                     Json = "json"
                 };
-                // confirm expected values matche what was added to object above
+                // confirm expected values match what was added to object above
                 Assert.AreEqual(stationData.Longitude, "longitude");
                 Assert.AreEqual(stationData.Latitude, "latitude");
                 Assert.AreEqual(stationData.StationId, "stationId");
@@ -110,7 +79,87 @@ namespace DatasetProg
             }
         }
 
-        // test that database connection is valid can pull information from database
+        // Test that URL object for the Database can be created & populated
+        [Test]
+        public void TestDatabaseCreation()
+        {
+            // creates a new URL object
+            var udb = new Url();
+            try
+            {
+                // confirm a blank URL object has been created
+                Assert.Null(udb);
+            }
+            // prints exception error stack trace
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+            try
+            {
+                // connects to MySQL DB to read data
+                // populates table
+                var results = udb.ReadTable();
+                // checks that table was populated & not empty
+                Assert.NotNull(results);
+                Assert.NotNull(udb);
+            }
+            // prints exception error stack trace
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+        }
+
+        // test to check if file is being created by serializer
+        [Test]
+        public void TestFileCreation()
+        {
+            // creation of List of type dataset with all the above info added using the Collections initializer
+            var test = new List<Dataset>();
+
+            // added above set values in list to rendered JSON file - with indent formatting.
+            var json = JsonConvert.SerializeObject(test, Formatting.Indented);
+            // serialize JSON to a string and then write string to a file
+            File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory\DatasetTest.jsonld",
+                JsonConvert.SerializeObject(test, Formatting.Indented));
+            // constant string variable representing a created file of Program.cs
+            const string curFile = @"C:\Users\aconw\Downloads\JSONDirectory\DatasetTest.jsonld";
+            try
+            {
+                // using the File.Exists method in I.O. - output string text that it does indeed exist
+                var result = File.Exists(curFile) ? "File exists" : "File does not exist";
+                const string expected = "File exists";
+                Assert.AreEqual(expected, result);
+            }
+            // prints exception error stack trace
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+        }
+
+        // test that the GetList method successful pulls a list
+        [Test]
+        public void TestGetList()
+        {
+            // creates new Url object
+            var testU = new Url();
+            try
+            {
+                // calls GetList method on the new Url object and assigns it to another object
+                var testList = testU.GetList();
+                // assert that the GetList method does not return a null List
+                Assert.NotNull(testList);
+            }
+            // prints exception error stack trace
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+        }
+
+        // test that database connection is valid & can pull information from database
         [Test]
         public void TestSelectFunction()
         {
@@ -122,7 +171,7 @@ namespace DatasetProg
                 const string readDb = @"SELECT stationID FROM Station WHERE longitude = '-9.89';";
                 var cmdRead = new MySqlCommand(readDb, _conn);
                 // execute query to return a single statement - cast to string type using Scalar
-                var result = (string)cmdRead.ExecuteScalar();
+                var result = (string) cmdRead.ExecuteScalar();
                 // close connection
                 _conn.Close();
                 // set expected to string value
@@ -135,25 +184,23 @@ namespace DatasetProg
                 Console.WriteLine(e.StackTrace);
             }
         }
-        // test to check if file is being created by serializer
-        [Test]
-        public void TestFileCreation()
-        {
-            // creation of List of type dataset with all the above info added using the Collections initializer
-            var test = new List<Dataset> { };
 
-            // added above set values in list to rendered JSON file - with indent formatting.
-            var json = JsonConvert.SerializeObject(test, Newtonsoft.Json.Formatting.Indented);
-            // serialize JSON to a string and then write string to a file
-            File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory\DatasetTest.jsonld", JsonConvert.SerializeObject(test, Newtonsoft.Json.Formatting.Indented));
-            // constant string variable representing a created file of Program.cs
-            const string curFile = @"C:\Users\aconw\Downloads\JSONDirectory\DatasetTest.jsonld";
+        // test that no data exists beyond the 33rd data point in the external DB
+        [Test]
+        public void TestLoopRight()
+        {
+            // creates new Url object
+            var uTest = new Url();
+            // 'results' stores data taken from external DB
+            var results = uTest.ReadTable();
+            // create new Distribution object
+            var dist1 = new Distribution();
             try
             {
-                // using the File.Exists method in I.O. - output string text that it does indeed exist
-                var result = (string)(File.Exists(curFile) ? "File exists" : "File does not exist");
-                const string expected = "File exists";
-                Assert.AreEqual(expected,result);
+                // contentURL attribute assigned to 34th value taken from DB
+                dist1.contentUrl = results[33].Json;
+                // assert that it should be empty as no 34th value exists
+                Assert.IsEmpty(dist1.contentUrl);
             }
             // prints exception error stack trace
             catch (Exception e)
