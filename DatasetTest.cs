@@ -119,7 +119,7 @@ namespace DatasetProg
             var test = new List<Dataset>();
 
             // added above set values in list to rendered JSON file - with indent formatting.
-            var json = JsonConvert.SerializeObject(test, Formatting.Indented);
+            JsonConvert.SerializeObject(test, Formatting.Indented);
             // serialize JSON to a string and then write string to a file
             File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory\DatasetTest.jsonld",
                 JsonConvert.SerializeObject(test, Formatting.Indented));

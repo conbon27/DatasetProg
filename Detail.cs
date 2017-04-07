@@ -112,7 +112,7 @@ namespace DatasetProg
                 // escape point here if format/output incorrect during testing
                 // Console.ReadKey();
                 // serialize JSON to a string and then write string to a file
-                File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory\Dataset" + i + ".jsonld",
+                File.WriteAllText(@"C:\Users\aconw\Downloads\JSONDirectory1\Dataset_" + results[i].StationId + ".jsonld",
                     JsonConvert.SerializeObject(oj, Formatting.Indented));
             }
         }
